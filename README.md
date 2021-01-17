@@ -1,33 +1,25 @@
 # guelph-course-parser
 
-Grabs course information from the university of Guelph and converts the webpage into JSON. 
-The JSON file is stored locally in the specified [output directory (see .env.example)](.env.example).
-The name of the file is the current Unix time of the computer running the program. If you are unsure what Unix time is [see this wiki page](https://en.wikipedia.org/wiki/Unix_time).
+Grabs course information from the university of Guelph's Webadvisor and returns a JSON response of the webpage
 
-## Setup
-### 1. Download Dependencies
+## Running the worker
+
+### 1. Create worker script
+
+Workers run in a browser Javascript environment instead of node. This allows them to run extremely fast, however, there are additional limitations when developing in workers including only being able to run a single script.
+
+To use npm modules and create modular code the app uses webpack to combine the app into a single script. Use the following command to use webpack to create the worker script.
+
 ```bash
-npm i
+npm run build
 ```
-Note: If you are running a 32bit OS or are having any other issues using pupeteers version of chromium you can download a chromium build for your OS with
-```bash
-sudo apt install chromium-browser
-```
+
+This command will compile the app into one big Javascript file including all the requried dependencies to run the code and save the script in `dist/worker.js`
 
 ### 2. Populate env file
-```bash
-cp .env.example .env
-```
 
-Open the .env file using your text editor of choice
-
-Set `SEMESTER` to the current semester
-
-Set `CHROME_PATH` to the output of `which chromium-browser` (If you had to download it manually)
-
-Set `OUTPUT_DIR` to the location which you would like the JSON files to be written
+- [ ] TODO
 
 ### 3. Run the project
-```bash
-npm start
-```
+
+- [ ] TODO
