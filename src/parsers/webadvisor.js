@@ -64,7 +64,7 @@ class BodyParser {
             const header = this.headers[this.el % this.headers.length]
 
             switch(header) {
-                case 'Meeting Information':
+                case 'MeetingInformation':
                     completeElement.split('\n').forEach((row) => {
                         if (row.includes('LEC')) { 
                             this.tmpBody['Lecture'] = row
