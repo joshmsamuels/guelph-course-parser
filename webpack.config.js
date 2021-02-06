@@ -1,16 +1,16 @@
 module.exports = {
-    entry: "./src/index.js",
-    mode: "production",
+    entry: './src/index.js',
+    mode: 'production',
     optimization: {
-      minimize: false
+        minimize: false,
     },
     performance: {
-      hints: false
+        hints: false,
     },
     output: {
-      path: __dirname + "/dist",
-      publicPath: "dist",
-      filename: "worker.js"
-    }
-  };
+        path: __dirname + '/dist',
+        publicPath: 'dist',
+        filename: 'worker.js',
+    },
+}
   

@@ -12,7 +12,7 @@ export default class WebadvisorParser {
     }
 
     async parse() {
-        const headerParser = new HeaderParser()
+        const headerParser = new HeaderParser() 
     
         await new HTMLRewriter({ html: true })
             .on('th[class~="Grp_WSS_COURSE_SECTIONS"]', headerParser)
@@ -32,17 +32,17 @@ export default class WebadvisorParser {
 class HeaderParser {
     constructor() {
         this.headers = []   
-        this.tmpText = ""
+        this.tmpText = ''
         
         // remove spaces, slashes and "and" to normalize the JSON
-        this.removeRegex = /[ \/]|and/g
+        this.removeRegex = /[ /]|and/g
     }
   
     text(text) {
         this.tmpText += text.text
         if (text.lastInTextNode) {
             this.headers.push(this.tmpText.replace(this.removeRegex, ''))
-            this.tmpText = ""
+            this.tmpText = ''
         }
     }
 }  
@@ -53,7 +53,7 @@ class BodyParser {
         this.body = []
         this.el = 0
         this.tmpBody = {}
-        this.tmpText = ""
+        this.tmpText = ''
     }
   
     text(text) {
@@ -64,52 +64,56 @@ class BodyParser {
             const header = this.headers[this.el % this.headers.length]
 
             switch(header) {
-                case 'MeetingInformation':
-                    completeElement.split('\n').forEach((row) => {
-                        if (row.includes('LEC')) { 
-                            this.tmpBody['Lecture'] = row
-                        }
-
-                        if (row.includes('SEM')) { 
-                            this.tmpBody['Seminar'] = row
-                        }
-
-                        if (row.includes('EXAM')) { 
-                            this.tmpBody['Exam'] = row
-                        }
-                    })
-                    break
-                case 'AvailableCapacity':
-                    let availableCapacity = completeElement.split('/')
-
-                    this.tmpBody['Available'] = Number(availableCapacity[0])
-                    this.tmpBody['Capacity'] = Number(availableCapacity[1])
-                    break
-                case 'SectionNameTitle':
-                    let courseCode = completeElement.match(/[A-Z]{2,4}[*][\d]{4}[*][A-Z0-9]{2,}/)[0]
-
-                    this.tmpBody['CourseCode'] = courseCode
-                    this.tmpBody[header] = completeElement
-                    break
-                case 'Credits':
-                    let creditNum = Number(completeElement)
-                    this.tmpBody[header] = creditNum !== 'NaN' ? creditNum : completeElement
-
-                    if (creditNum === 'NaN') {
-                        console.warn(`The credit "${completeElement}" could not be parsed into a number`)
-                        this.tmpBody[header] = completeElement
-                        break;
+            case 'MeetingInformation': {
+                completeElement.split('\n').forEach((row) => {
+                    if (row.includes('LEC')) { 
+                        this.tmpBody.Lecture = row
                     }
 
-                    this.tmpBody[header] = creditNum
-                    break;
-                default:
-                    // No additional processing on the element is needed
+                    if (row.includes('SEM')) { 
+                        this.tmpBody.Seminar = row
+                    }
+
+                    if (row.includes('EXAM')) { 
+                        this.tmpBody.Exam = row
+                    }
+                })
+                break
+            } 
+            case 'AvailableCapacity': {
+                const availableCapacity = completeElement.split('/')
+
+                this.tmpBody.Available = Number(availableCapacity[0])
+                this.tmpBody.Capacity = Number(availableCapacity[1])
+                break
+            } 
+            case 'SectionNameTitle': {
+                const courseCode = completeElement.match(/[A-Z]{2,4}[*][\d]{4}[*][A-Z0-9]{2,}/)[0]
+
+                this.tmpBody.CourseCode = courseCode
+                this.tmpBody[header] = completeElement
+                break
+            } 
+            case 'Credits': {
+                const creditNum = Number(completeElement)
+                this.tmpBody[header] = creditNum !== 'NaN' ? creditNum : completeElement
+
+                if (creditNum === 'NaN') {
+                    console.warn(`The credit "${completeElement}" could not be parsed into a number`)
                     this.tmpBody[header] = completeElement
                     break
+                }
+
+                this.tmpBody[header] = creditNum
+                break
+            } 
+            default:
+                // No additional processing on the element is needed
+                this.tmpBody[header] = completeElement
+                break
             }
 
-            this.tmpText = ""
+            this.tmpText = ''
 
 
             if ((this.el + 1) % this.headers.length === 0) {
