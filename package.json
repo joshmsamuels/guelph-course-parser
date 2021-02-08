@@ -5,6 +5,8 @@
   "private": true,
   "scripts": {
     "build": "webpack",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "start": "echo \"Error: no start specified\" && exit 1",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,6 +17,9 @@
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
+    "eslint": "^7.19.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
     "webpack": "^4",
     "webpack-cli": "^4.2.0"
   }
