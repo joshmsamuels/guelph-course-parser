@@ -1,0 +1,11 @@
+name = "webadvisor-api"
+type = "webpack"
+webpack_config = "webpack.config.js"
+account_id = "a4d6f16f5a3088a42ad9de1ada9866a3"
+zone_id = "ca936b53cf43a7c64db49786b33af59e"
+
+[env.prod]
+route = "webadvisor.joshmsamuels.ca/v1"
+
+[env.staging]
+route = "staging-webadvisor.joshmsamuels.ca"

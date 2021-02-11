@@ -1,3 +1,5 @@
+const Dotenv = require('dotenv-webpack')
+
 module.exports = {
     entry: './src/index.js',
     mode: 'production',
@@ -12,5 +14,10 @@ module.exports = {
         publicPath: 'dist',
         filename: 'worker.js',
     },
+    plugins: [
+        new Dotenv({
+            systemvars: process.env.CI === 'true',
+        }),
+    ],  
 }
   
