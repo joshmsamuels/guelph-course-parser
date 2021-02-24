@@ -13,6 +13,12 @@ module.exports = {
         // HTMLRewriter is globally defined inside cloudflare workers
         // the intended environment for this package to run in.
         'HTMLRewriter': 'readonly',
+
+        // Must be defined as environment secrets
+        'AWS_REGION': 'readonly',
+        'AWS_ACCESS_KEY_ID': 'readonly',
+        'AWS_SECRET_ACCESS_KEY': 'readonly',
+        'AUTHORIZATION_KEY': 'readonly',
     },
     'rules': {
         'indent': [

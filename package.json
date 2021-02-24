@@ -15,6 +15,7 @@
   "author": "Joshua Samuels",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.6.1",
     "fetch-cookie": "^0.11.0",
     "node-fetch": "^2.6.1"
   },
